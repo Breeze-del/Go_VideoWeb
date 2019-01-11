@@ -9,7 +9,7 @@ type UserCredential struct {
 // Data model
 type VideoInfo struct {
 	Id           string
-	AuthorId     string
+	AuthorId     int
 	Name         string
 	DisplayCtiem string
 }
