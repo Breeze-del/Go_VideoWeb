@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"serve_video/api/model"
 )
 
 // 添加用户
@@ -49,4 +50,8 @@ func DeleteUserCreadential(loginName, pwd string) error {
 	}
 	defer stmDel.Close()
 	return nil
+}
+
+func AddNewViedo(aid int, name string) (*model.VideoInfo, error) {
+	// create uuid
 }
