@@ -13,3 +13,11 @@ type VideoInfo struct {
 	Name         string
 	DisplayCtiem string
 }
+
+// 评论实体
+type Comments struct {
+	Id      string
+	VideoId string
+	Author  string
+	Content string
+}

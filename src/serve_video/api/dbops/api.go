@@ -113,3 +113,43 @@ func DeleteVideoInfo(vid string) error {
 	defer stmtDel.Close()
 	return nil
 }
+
+// 添加评论
+func AddNewComments(vid string, aid int, content string) error {
+	id, err := utils.NewUUID()
+	if err != nil {
+		return err
+	}
+	stmIns, err := dbConn.Prepare("INSERT INTO comments(id,video_id,author_id,content) VALUES (?,?,?,?)")
+	if err != nil {
+		return err
+	}
+	_, err = stmIns.Exec(id, vid, aid, content)
+	if err != nil {
+		return err
+	}
+	defer stmIns.Close()
+	return nil
+}
+
+// 根据视频id 找出所有的评论用户姓名和评论
+func ListComments(vid string, from, to int) ([]*model.Comments, error) {
+	stmOut, err := dbConn.Prepare(`SELECT comments.id,users.login_name,comments.content from comments
+		INNER JOIN users ON comments.author_id = users.id
+		WHERE comments.video_id = ? AND comments.time > FROM_UNIXTIME(?) AND comments.time <= FROM_UNIXTIME(?)`)
+	var res []*model.Comments
+	rows, err := stmOut.Query(vid, from, to)
+	if err != nil {
+		return res, err
+	}
+	for rows.Next() {
+		var id, name, content string
+		if err := rows.Scan(&id, &name, &content); err != nil {
+			return res, err
+		}
+		c := &model.Comments{Id: id, VideoId: vid, Author: name, Content: content}
+		res = append(res, c)
+	}
+	defer stmOut.Close()
+	return res, nil
+}
