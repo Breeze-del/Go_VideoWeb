@@ -16,8 +16,12 @@ func RegisterHandlers() *httprouter.Router {
 	return router
 }
 func main() {
+	// 返回一个httpRouter
 	r := RegisterHandlers()
-	err := http.ListenAndServe(":8080", r)
+	// 先将router放入结构体，然后结构体实现handler
+	// 劫持掉httpResponseWriter和 Request
+	mh := controler.NewMiddleWareHandler(r)
+	err := http.ListenAndServe(":8080", mh)
 	if err != nil {
 		os.Exit(2)
 	}

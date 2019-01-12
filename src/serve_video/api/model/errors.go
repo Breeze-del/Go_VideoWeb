@@ -1,6 +1,6 @@
 package model
 
-//error
+//error 写好的一些返回error
 
 type Err struct {
 	Error     string `json:"error"`
@@ -13,6 +13,7 @@ type ErroResponse struct {
 }
 
 var (
+	// body解析错误
 	ErrorRequestBodyParseFailed = ErroResponse{
 		HttpSc: 400,
 		Error: Err{
@@ -20,11 +21,27 @@ var (
 			ErrorCode: "001",
 		},
 	}
+	// 用户检验失败
 	ErrorNotAuthUser = ErroResponse{
 		HttpSc: 400,
 		Error: Err{
 			Error:     "User authentication failed",
 			ErrorCode: "002",
+		},
+	}
+	// 数据库操作失败
+	ErrorDBError = ErroResponse{
+		HttpSc: 500,
+		Error: Err{
+			Error:     "DB ops failed",
+			ErrorCode: "003",
+		},
+	}
+	ErrorInternalFailed = ErroResponse{
+		HttpSc: 500,
+		Error: Err{
+			Error:     "Internal service failed",
+			ErrorCode: "004",
 		},
 	}
 )
