@@ -85,7 +85,7 @@ func DeleteSession(sid string) error {
 		log.Printf("%s", err)
 		return err
 	}
-	if _, err := stmtOut.Query(sid); err != nil {
+	if _, err := stmtOut.Exec(sid); err != nil {
 		return err
 	}
 	stmtOut.Close()
