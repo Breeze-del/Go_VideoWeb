@@ -21,3 +21,9 @@ type Comments struct {
 	Author  string
 	Content string
 }
+
+// 从db里拿sessionId 登陆分配sessionId 检验session是否过期
+type SimpleSessiong struct {
+	UserName string
+	TTL      int64
+}
