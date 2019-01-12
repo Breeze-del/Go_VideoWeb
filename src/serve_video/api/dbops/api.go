@@ -85,19 +85,16 @@ func AddNewViedo(aid int, name string) (*model.VideoInfo, error) {
 // 获取video
 func GetVideoInfo(vid string) (*model.VideoInfo, error) {
 	stmtOut, err := dbConn.Prepare("SELECT author_id, name, display_ctime FROM video_info WHERE id=?")
-	var aid int
-	var dct string
-	var name string
-	err = stmtOut.QueryRow(vid).Scan(&aid, &name, &dct)
+	res := model.VideoInfo{Id: vid}
+	err = stmtOut.QueryRow(vid).Scan(&res.AuthorId, &res.Name, &res.DisplayCtiem)
 	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 	if err == sql.ErrNoRows {
 		return nil, nil
 	}
-	defer stmtOut.Close()
-	res := &model.VideoInfo{Id: vid, AuthorId: aid, Name: name, DisplayCtiem: dct}
-	return res, nil
+	stmtOut.Close()
+	return &res, nil
 }
 
 // 删除video
@@ -110,7 +107,7 @@ func DeleteVideoInfo(vid string) error {
 	if err != nil {
 		return err
 	}
-	defer stmtDel.Close()
+	stmtDel.Close()
 	return nil
 }
 
@@ -128,7 +125,7 @@ func AddNewComments(vid string, aid int, content string) error {
 	if err != nil {
 		return err
 	}
-	defer stmIns.Close()
+	stmIns.Close()
 	return nil
 }
 
@@ -143,12 +140,11 @@ func ListComments(vid string, from, to int) ([]*model.Comments, error) {
 		return res, err
 	}
 	for rows.Next() {
-		var id, name, content string
-		if err := rows.Scan(&id, &name, &content); err != nil {
+		comment := model.Comments{}
+		if err := rows.Scan(&comment.Id, &comment.Author, &comment.Content); err != nil {
 			return res, err
 		}
-		c := &model.Comments{Id: id, VideoId: vid, Author: name, Content: content}
-		res = append(res, c)
+		res = append(res, &comment)
 	}
 	defer stmOut.Close()
 	return res, nil
