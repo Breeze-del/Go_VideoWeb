@@ -114,7 +114,8 @@ func testAddComments(t *testing.T) {
 func testListComments(t *testing.T) {
 	vid := "12345"
 	from := 1514764800
-	to, _ := strconv.Atoi(strconv.FormatInt(time.Now().UnixNano()/1000000000, 10))
+	// 获取当前本地时间戳，然后转成int类型
+	to, _ := strconv.Atoi(strconv.FormatInt(time.Now().Unix(), 10))
 	res, err := ListComments(vid, from, to)
 	if err != nil {
 		t.Errorf("listComments err : %s", err)
