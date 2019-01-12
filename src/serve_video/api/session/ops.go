@@ -13,6 +13,7 @@ import (
 var sessionMap *sync.Map
 
 func init() {
+	// 并发安全Map，当作缓存 key-sessionId value-*Session实体
 	sessionMap = &sync.Map{}
 }
 

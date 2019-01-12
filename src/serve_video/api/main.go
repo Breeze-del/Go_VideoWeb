@@ -11,6 +11,7 @@ import (
 // 返回一个router路由实例
 func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
+	// 注册路由
 	router.POST("/user", controler.CreateUser)
 	router.POST("/user/:user_name", controler.Login)
 	return router

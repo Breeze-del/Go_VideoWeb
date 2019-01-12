@@ -132,7 +132,7 @@ func AddNewComments(vid string, aid int, content string) error {
 	return nil
 }
 
-// 根据视频id 找出所有的评论用户姓名和评论
+// 根据视频id 找出某个时间内所有的评论用户姓名和评论
 func ListComments(vid string, from, to int) ([]*model.Comments, error) {
 	stmOut, err := dbConn.Prepare(`SELECT comments.id,users.login_name,comments.content from comments
 		INNER JOIN users ON comments.author_id = users.id

@@ -15,6 +15,7 @@ import (
 func CreateUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	res, _ := ioutil.ReadAll(req.Body)
 	ubody := &model.UserCredential{}
+	// 解析用户信息
 	if err := json.Unmarshal(res, ubody); err != nil {
 		// 如果解析失败，那么返回解析失败
 		sendErrorRespinse(w, model.ErrorRequestBodyParseFailed)
@@ -27,6 +28,7 @@ func CreateUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	}
 	// 产生session写入数据库和cache 返回sessionId
 	id := session.GenerateNewSessionId(ubody.Username)
+	// 将sessionId返回给前端
 	su := &model.SignedUp{Success: true, SessionId: id}
 	if resp, err := json.Marshal(su); err != nil {
 		sendErrorRespinse(w, model.ErrorInternalFailed)
