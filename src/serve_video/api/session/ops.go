@@ -49,6 +49,7 @@ func IsSessionExpired(sid string) (string, bool) {
 	ss, ok := sessionMap.Load(sid)
 	if ok {
 		ct := time.Now().Unix()
+		// 如果session超时了
 		if ss.(*model.SimpleSessiong).TTL < ct {
 			DeleteExpiredSession(sid)
 			return "", true

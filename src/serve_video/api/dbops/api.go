@@ -2,7 +2,6 @@ package dbops
 
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"serve_video/api/model"
 	"serve_video/api/utils"
