@@ -14,6 +14,12 @@ func RegisterHandlers() *httprouter.Router {
 	// 注册路由
 	router.POST("/user", controler.CreateUser)
 	router.POST("/user/:user_name", controler.Login)
+	router.GET("/user/:username", controler.GetUserInfo)
+	router.POST("/user/:username/videos", controler.AddNewVideo)
+	router.GET("/user/:username/videos", controler.ListAllVideos)
+	router.DELETE("/user/:username/videos/:vid-id", controler.DeleteVideo)
+	router.POST("/videos/:vid-id/comments", controler.PostComment)
+	router.GET("/videos/:vid-id/comments", controler.ShowComments)
 	return router
 }
 func main() {
@@ -22,7 +28,7 @@ func main() {
 	// 先将router放入结构体，然后结构体实现handler
 	// 劫持掉httpResponseWriter和 Request
 	mh := controler.NewMiddleWareHandler(r)
-	err := http.ListenAndServe(":8080", mh)
+	err := http.ListenAndServe(":8000", mh)
 	if err != nil {
 		os.Exit(2)
 	}
