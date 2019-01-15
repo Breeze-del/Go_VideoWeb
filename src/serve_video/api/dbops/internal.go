@@ -25,8 +25,8 @@ func InsertSession(sid string, ttl int64, usname string) error {
 }
 
 // 根据sessionId 查session表
-func RetrieveSession(sid string) (*model.SimpleSessiong, error) {
-	ss := &model.SimpleSessiong{}
+func RetrieveSession(sid string) (*model.SimpleSession, error) {
+	ss := &model.SimpleSession{}
 	stmOut, err := dbConn.Prepare("SELECT sessions.login_name,sessions.TTL FROM sessions WHERE sessions.session_id=?")
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func RetrieveSession(sid string) (*model.SimpleSessiong, error) {
 	if err != nil {
 		return nil, err
 	}
-	ss.UserName = usname
+	ss.Username = usname
 	ss.TTL = ttlInt64
 	return ss, nil
 }
@@ -69,7 +69,7 @@ func RetrieveAllSessions() (*sync.Map, error) {
 			break
 		}
 		if ttl, err1 := strconv.ParseInt(ttlstr, 10, 64); err1 == nil {
-			ss := &model.SimpleSessiong{UserName: login_name, TTL: ttl}
+			ss := &model.SimpleSession{Username: login_name, TTL: ttl}
 			m.Store(id, ss)
 			log.Printf(" session id: %s, ttl: %d", id, ss.TTL)
 		}

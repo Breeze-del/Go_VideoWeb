@@ -30,6 +30,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			return
 		}
 		t.Execute(w, page)
+		return
 	}
 	if len(cname.Value) != 0 && len(sid.Value) != 0 {
 		http.Redirect(w, r, "/userhome", http.StatusFound)

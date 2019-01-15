@@ -13,7 +13,7 @@ func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
 	// 注册路由
 	router.POST("/user", controler.CreateUser)
-	router.POST("/user/:user_name", controler.Login)
+	router.POST("/user/:username", controler.Login)
 	router.GET("/user/:username", controler.GetUserInfo)
 	router.POST("/user/:username/videos", controler.AddNewVideo)
 	router.GET("/user/:username/videos", controler.ListAllVideos)

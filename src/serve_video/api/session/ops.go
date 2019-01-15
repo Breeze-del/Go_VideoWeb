@@ -24,7 +24,7 @@ func LoadSessionsFromDB() {
 		return
 	}
 	r.Range(func(key, value interface{}) bool {
-		ss := value.(*model.SimpleSessiong)
+		ss := value.(*model.SimpleSession)
 		sessionMap.Store(key, ss)
 		return true
 	})
@@ -35,7 +35,7 @@ func GenerateNewSessionId(un string) string {
 	id, _ := utils.NewUUID()
 	ct := time.Now().Unix() // 返回时间戳 精确到秒
 	ttl := ct + 30*60       //过期时间30分钟
-	ss := &model.SimpleSessiong{UserName: un, TTL: ttl}
+	ss := &model.SimpleSession{Username: un, TTL: ttl}
 	sessionMap.Store(id, ss)
 	err := dbops.InsertSession(id, ttl, un)
 	if err != nil {
@@ -50,11 +50,11 @@ func IsSessionExpired(sid string) (string, bool) {
 	if ok {
 		ct := time.Now().Unix()
 		// 如果session超时了
-		if ss.(*model.SimpleSessiong).TTL < ct {
+		if ss.(*model.SimpleSession).TTL < ct {
 			DeleteExpiredSession(sid)
 			return "", true
 		}
-		return ss.(*model.SimpleSessiong).UserName, false
+		return ss.(*model.SimpleSession).Username, false
 	}
 	return "", true
 }
