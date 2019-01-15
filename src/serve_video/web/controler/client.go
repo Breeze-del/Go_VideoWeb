@@ -65,5 +65,6 @@ func normalResponse(w http.ResponseWriter, r *http.Response) {
 	}
 
 	w.WriteHeader(r.StatusCode)
-	io.WriteString(w, string(res))
+	tt := string(res)
+	io.WriteString(w, tt)
 }

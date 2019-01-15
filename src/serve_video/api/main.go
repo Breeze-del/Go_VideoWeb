@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"serve_video/api/controler"
+	"serve_video/api/session"
 )
 
 // 返回一个router路由实例
@@ -22,7 +23,12 @@ func RegisterHandlers() *httprouter.Router {
 	router.GET("/videos/:vid-id/comments", controler.ShowComments)
 	return router
 }
+
+func prepare() {
+	session.LoadSessionsFromDB()
+}
 func main() {
+	prepare()
 	// 返回一个httpRouter
 	r := RegisterHandlers()
 	// 先将router放入结构体，然后结构体实现handler
