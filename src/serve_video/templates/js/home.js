@@ -206,6 +206,7 @@ function initPage(callback) {
     });
 }
 
+// 设置cookie
 function setCookie(cname, cvalue, exmin) {
     var d = new Date();
     d.setTime(d.getTime() + (exmin * 60 * 1000));
@@ -213,6 +214,7 @@ function setCookie(cname, cvalue, exmin) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+// 获取cookie
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
