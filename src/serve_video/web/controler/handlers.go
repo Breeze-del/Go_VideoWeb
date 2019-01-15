@@ -78,6 +78,7 @@ func ApiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	defer r.Body.Close()
 }
 
+// 转发请求
 func ProxyHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	u, _ := url.Parse("http://127.0.0.1:9000/")
 	proxy := httputil.NewSingleHostReverseProxy(u)
