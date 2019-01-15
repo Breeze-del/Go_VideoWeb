@@ -10,10 +10,10 @@ func RegisterHandler() *httprouter.Router {
 	router := httprouter.New()
 
 	router.GET("/", controler.HomeHandler)
-	//router.POST("/", homeHandler)
-	//router.GET("/userhome", userHomeHandler)
-	//router.POST("/userhome", userHomeHandler)
-	//router.POST("/api", apiHandler)
+	router.POST("/", controler.HomeHandler)
+	router.GET("/userhome", controler.UserHomeHandler)
+	router.POST("/userhome", controler.UserHomeHandler)
+	router.POST("/api", controler.ApiHandler)
 	router.ServeFiles("/static/*filepath", http.Dir("./templates"))
 	return router
 }

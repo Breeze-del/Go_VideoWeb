@@ -37,7 +37,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 }
 
-func userHomeHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func UserHomeHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	cname, err1 := r.Cookie("username")
 	_, err2 := r.Cookie("session")
 	if err1 != nil || err2 != nil {
@@ -60,7 +60,7 @@ func userHomeHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 	t.Execute(w, p)
 }
 
-func apiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func ApiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	if r.Method != http.MethodPost {
 		re, _ := json.Marshal(ErrorRequestNotRecognized)
 		io.WriteString(w, string(re))
@@ -78,7 +78,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	defer r.Body.Close()
 }
 
-func proxyHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func ProxyHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	u, _ := url.Parse("http://127.0.0.1:9000/")
 	proxy := httputil.NewSingleHostReverseProxy(u)
 	proxy.ServeHTTP(w, r)
