@@ -10,6 +10,7 @@ func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
 	router.GET("/videos/:vid-id", controler.StreamHandler)
 	router.POST("/upload/:vid-id", controler.UploadHandler)
+	router.GET("/testpage", controler.TestPageHandler)
 	return router
 }
 func main() {
