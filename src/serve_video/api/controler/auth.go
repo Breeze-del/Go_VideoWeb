@@ -49,5 +49,6 @@ func validateUser(w http.ResponseWriter, req *http.Request) bool {
 		sendErrorRespinse(w, model.ErrorNotAuthUser)
 		return false
 	}
+
 	return true
 }
